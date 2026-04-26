@@ -119,13 +119,7 @@ body {
   <p>AI Systems | Trading Intelligence | Cybersecurity Tools</p>
 </div>
 
-<!-- FEATURED -->
-
-<div class="section">
-  <h2>🔥 Featured Products</h2>
-  <div class="grid">
-
-    <!-- FEATURED -->
+<!-- FEATURED PROJECTS -->
 
 <div class="section">
   <h2>🔥 Featured Products</h2>
@@ -166,9 +160,6 @@ body {
   </div>
 </div>
 
-
-
-
 <!-- FILTER -->
 
 <div class="section filters">
@@ -179,7 +170,7 @@ body {
   <button class="btn" onclick="filterRepos('security')">Cybersecurity</button>
 </div>
 
-<!-- PROJECTS -->
+<!-- ALL PROJECTS -->
 
 <div class="grid" id="repos"></div>
 
@@ -192,7 +183,7 @@ body {
 <script>
 let allRepos = [];
 
-// CATEGORY
+// CATEGORY LOGIC
 function getCategory(name) {
   name = name.toLowerCase();
 
@@ -208,15 +199,15 @@ function getCategory(name) {
   return "other";
 }
 
-// IMAGE
+// IMAGE MAPPING (STABLE)
 function getImage(category) {
-  if (category === "trading") return "https://source.unsplash.com/600x400/?stock,market";
-  if (category === "security") return "https://source.unsplash.com/600x400/?cybersecurity";
-  if (category === "ai") return "https://source.unsplash.com/600x400/?artificial-intelligence";
-  return "https://source.unsplash.com/600x400/?technology";
+  if (category === "trading") return "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800";
+  if (category === "security") return "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800";
+  if (category === "ai") return "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800";
+  return "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800";
 }
 
-// RENDER
+// RENDER PROJECTS
 function renderRepos(filter) {
   let html = "";
 
@@ -258,14 +249,14 @@ function filterRepos(type) {
   renderRepos(type);
 }
 
-// FETCH
+// FETCH YOUR REPOS
 fetch("https://api.github.com/users/seneeraj/repos")
   .then(res => res.json())
   .then(data => {
     allRepos = data;
     renderRepos("all");
   })
-  .catch(err => {
+  .catch(() => {
     document.getElementById("repos").innerHTML = "<p>Error loading projects</p>";
   });
 </script>
