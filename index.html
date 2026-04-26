@@ -22,7 +22,7 @@ body {
   padding: 0 20px;
 }
 
-/* SECTION SPACING */
+/* SECTION */
 .section {
   padding: 80px 0;
 }
@@ -40,37 +40,31 @@ body {
   font-size: 18px;
 }
 
-/* GRID (SAAS STYLE) */
+/* GRID (CONTROLLED LAYOUT) */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
 }
 
+/* RESPONSIVE */
 @media (max-width: 992px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
 @media (max-width: 600px) {
   .grid {
     grid-template-columns: 1fr;
   }
-}  
+}
 
 /* CARD */
 .card {
   background: #0f172a;
   border-radius: 16px;
   overflow: hidden;
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: translateY(30px);
-}
-.card.show {
-  opacity: 1;
-  transform: translateY(0);
+  transition: 0.3s;
 }
 .card:hover {
   transform: translateY(-8px);
@@ -120,7 +114,7 @@ body {
   font-size: 14px;
 }
 
-/* FILTER BUTTONS */
+/* FILTER */
 .filters {
   text-align: center;
 }
@@ -133,13 +127,6 @@ body {
   text-align: center;
   padding: 40px 0;
   color: #94a3b8;
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 32px;
-  }
 }
 </style>
 
@@ -164,7 +151,7 @@ body {
   <div class="grid">
 
 ```
-<div class="card show">
+<div class="card">
   <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?w=800">
   <div class="card-content">
     <span class="tag">AI / Finance</span>
@@ -174,7 +161,7 @@ body {
   </div>
 </div>
 
-<div class="card show">
+<div class="card">
   <img src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=800">
   <div class="card-content">
     <span class="tag">AI / Healthcare</span>
@@ -184,7 +171,7 @@ body {
   </div>
 </div>
 
-<div class="card show">
+<div class="card">
   <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800">
   <div class="card-content">
     <span class="tag">Cybersecurity AI</span>
@@ -265,13 +252,6 @@ function renderRepos(filter) {
     });
 
   document.getElementById("repos").innerHTML = html;
-  animateCards();
-}
-
-function animateCards() {
-  document.querySelectorAll(".card").forEach((card, i) => {
-    setTimeout(() => card.classList.add("show"), i * 100);
-  });
 }
 
 function filterRepos(type) {
