@@ -15,40 +15,45 @@ body {
   color: white;
 }
 
-/* CONTAINER (FIXES SIDE SPACE) */
+/* CONTAINER */
 .container {
   max-width: 1200px;
   margin: auto;
   padding: 0 20px;
 }
 
+/* SECTION SPACING */
+.section {
+  padding: 80px 0;
+}
+
 /* HERO */
 .hero {
   text-align: center;
-  padding: 80px 20px;
 }
-.hero h1 { font-size: 48px; }
-.hero p { color: #94a3b8; }
-
-/* SECTION */
-.section {
-  padding: 40px 0;
-  text-align: center;
+.hero h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+.hero p {
+  color: #94a3b8;
+  font-size: 18px;
 }
 
-/* GRID */
+/* GRID (SAAS STYLE) */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
 }
 
 /* CARD */
 .card {
   background: #0f172a;
-  border-radius: 15px;
+  border-radius: 16px;
   overflow: hidden;
-  transition: 0.4s;
+  transition: all 0.3s ease;
   opacity: 0;
   transform: translateY(30px);
 }
@@ -57,7 +62,7 @@ body {
   transform: translateY(0);
 }
 .card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-8px);
 }
 
 /* IMAGE */
@@ -69,20 +74,23 @@ body {
 
 /* CONTENT */
 .card-content {
-  padding: 15px;
+  padding: 20px;
 }
 
 .tag {
   display: inline-block;
-  padding: 4px 8px;
+  padding: 5px 10px;
   background: #1e293b;
   border-radius: 6px;
   font-size: 12px;
   color: #38bdf8;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
-.card h3 { margin: 5px 0; }
+.card h3 {
+  margin: 10px 0;
+  font-size: 20px;
+}
 
 .card p {
   color: #94a3b8;
@@ -92,8 +100,8 @@ body {
 /* BUTTON */
 .btn {
   display: inline-block;
-  margin: 5px;
-  padding: 8px 12px;
+  margin-top: 10px;
+  padding: 10px 14px;
   border-radius: 8px;
   background: #38bdf8;
   color: black;
@@ -101,16 +109,26 @@ body {
   font-size: 14px;
 }
 
-/* FILTER */
+/* FILTER BUTTONS */
 .filters {
   text-align: center;
+}
+.filters .btn {
+  margin: 5px;
 }
 
 /* FOOTER */
 .footer {
   text-align: center;
-  padding: 20px;
+  padding: 40px 0;
   color: #94a3b8;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 32px;
+  }
 }
 </style>
 
@@ -122,7 +140,7 @@ body {
 
 <!-- HERO -->
 
-<div class="hero">
+<div class="section hero">
   <h1>🚀 Building AI Products for Real-World Impact</h1>
   <p>AI Systems | Trading Intelligence | Cybersecurity Tools</p>
 </div>
@@ -131,6 +149,7 @@ body {
 
 <div class="section">
   <h2>🔥 Featured Products</h2>
+
   <div class="grid">
 
 ```
@@ -172,15 +191,16 @@ body {
 
 <div class="section filters">
   <h2>📂 Explore Projects</h2>
-  <button class="btn" onclick="filterRepos('all')">All</button>
-  <button class="btn" onclick="filterRepos('ai')">AI</button>
-  <button class="btn" onclick="filterRepos('trading')">Trading</button>
-  <button class="btn" onclick="filterRepos('security')">Cybersecurity</button>
+
+<button class="btn" onclick="filterRepos('all')">All</button> <button class="btn" onclick="filterRepos('ai')">AI</button> <button class="btn" onclick="filterRepos('trading')">Trading</button> <button class="btn" onclick="filterRepos('security')">Cybersecurity</button>
+
 </div>
 
 <!-- PROJECTS -->
 
-<div class="grid" id="repos"></div>
+<div class="section">
+  <div class="grid" id="repos"></div>
+</div>
 
 <!-- FOOTER -->
 
@@ -238,8 +258,7 @@ function renderRepos(filter) {
 }
 
 function animateCards() {
-  const cards = document.querySelectorAll(".card");
-  cards.forEach((card, i) => {
+  document.querySelectorAll(".card").forEach((card, i) => {
     setTimeout(() => card.classList.add("show"), i * 100);
   });
 }
