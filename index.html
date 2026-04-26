@@ -47,6 +47,18 @@ body {
   gap: 30px;
 }
 
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}  
+
 /* CARD */
 .card {
   background: #0f172a;
