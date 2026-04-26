@@ -28,28 +28,62 @@ body {
   padding: 40px 20px;
   text-align: center;
 }
-.section h2 { margin-bottom: 20px; }
 
 /* GRID */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
   padding: 20px;
 }
 
 /* CARD */
 .card {
   background: #0f172a;
-  padding: 20px;
   border-radius: 15px;
-  transition: 0.3s;
+  overflow: hidden;
+  transition: 0.4s;
+  opacity: 0;
+  transform: translateY(30px);
 }
-.card:hover { transform: translateY(-5px); }
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
 
-.card p { color: #94a3b8; }
+/* IMAGE */
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
 
-/* BUTTONS */
+/* CONTENT */
+.card-content {
+  padding: 15px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 8px;
+  background: #1e293b;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #38bdf8;
+  margin-bottom: 8px;
+}
+
+.card h3 { margin: 5px 0; }
+
+.card p {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* BUTTON */
 .btn {
   display: inline-block;
   margin: 5px;
@@ -61,15 +95,9 @@ body {
   font-size: 14px;
 }
 
-/* TAG */
-.tag {
-  display: inline-block;
-  padding: 4px 8px;
-  margin-bottom: 8px;
-  background: #1e293b;
-  border-radius: 6px;
-  font-size: 12px;
-  color: #38bdf8;
+/* FILTER */
+.filters {
+  text-align: center;
 }
 
 /* FOOTER */
@@ -91,32 +119,41 @@ body {
   <p>AI Systems | Trading Intelligence | Cybersecurity Tools</p>
 </div>
 
-<!-- FEATURED PROJECTS -->
+<!-- FEATURED -->
 
 <div class="section">
   <h2>🔥 Featured Products</h2>
   <div class="grid">
 
 ```
-<div class="card">
-  <span class="tag">AI / Finance</span>
-  <h3>🛡️ Mutual Fund Investment</h3>
-  <p>AI-powered mutual fund strategy with monthly withdrawal planning.</p>
-  <a class="btn" href="https://mutual-fund-investment-with-ai-reasoning-vgjiibcenppcxag9updap.streamlit.app/" target="_blank">Live Demo</a>
+<div class="card show">
+  <img src="https://source.unsplash.com/600x400/?finance,ai">
+  <div class="card-content">
+    <span class="tag">AI / Finance</span>
+    <h3>🛡️ Mutual Fund Investment</h3>
+    <p>AI-powered mutual fund strategy with monthly withdrawal planning.</p>
+    <a class="btn" href="https://mutual-fund-investment-with-ai-reasoning-vgjiibcenppcxag9updap.streamlit.app/" target="_blank">Live Demo</a>
+  </div>
 </div>
 
-<div class="card">
-  <span class="tag">AI / Healthcare</span>
-  <h3>🎙️ Doctor's AI Assistant</h3>
-  <p>AI assistant for capturing symptoms and aiding diagnosis.</p>
-  <a class="btn" href="https://doctor-s-ai-medical-assistant-in-health-diagnosis-nau7jrqbgncz.streamlit.app/" target="_blank">Live Demo</a>
+<div class="card show">
+  <img src="https://source.unsplash.com/600x400/?health,ai">
+  <div class="card-content">
+    <span class="tag">AI / Healthcare</span>
+    <h3>🎙️ Doctor's AI Assistant</h3>
+    <p>AI assistant for capturing symptoms and aiding diagnosis.</p>
+    <a class="btn" href="https://doctor-s-ai-medical-assistant-in-health-diagnosis-nau7jrqbgncz.streamlit.app/" target="_blank">Live Demo</a>
+  </div>
 </div>
 
-<div class="card">
-  <span class="tag">Cybersecurity AI</span>
-  <h3>📈 Cyber Crime Detection</h3>
-  <p>AI system for detecting scams across text, image, UPI, and more.</p>
-  <a class="btn" href="https://duak9ecnfsqypfyappedza.streamlit.app/" target="_blank">Live Demo</a>
+<div class="card show">
+  <img src="https://source.unsplash.com/600x400/?cybersecurity,hacking">
+  <div class="card-content">
+    <span class="tag">Cybersecurity AI</span>
+    <h3>📈 Cyber Crime Detection</h3>
+    <p>AI system for detecting scams across text, image, UPI, and more.</p>
+    <a class="btn" href="https://duak9ecnfsqypfyappedza.streamlit.app/" target="_blank">Live Demo</a>
+  </div>
 </div>
 ```
 
@@ -125,7 +162,7 @@ body {
 
 <!-- FILTER -->
 
-<div class="section">
+<div class="section filters">
   <h2>📂 Explore Projects</h2>
   <button class="btn" onclick="filterRepos('all')">All</button>
   <button class="btn" onclick="filterRepos('ai')">AI</button>
@@ -146,7 +183,7 @@ body {
 <script>
 let allRepos = [];
 
-// CATEGORY LOGIC
+// CATEGORY
 function getCategory(name) {
   name = name.toLowerCase();
 
@@ -162,7 +199,15 @@ function getCategory(name) {
   return "other";
 }
 
-// RENDER PROJECTS
+// IMAGE
+function getImage(category) {
+  if (category === "trading") return "https://source.unsplash.com/600x400/?stock,market";
+  if (category === "security") return "https://source.unsplash.com/600x400/?cybersecurity";
+  if (category === "ai") return "https://source.unsplash.com/600x400/?artificial-intelligence";
+  return "https://source.unsplash.com/600x400/?technology";
+}
+
+// RENDER
 function renderRepos(filter) {
   let html = "";
 
@@ -174,25 +219,37 @@ function renderRepos(filter) {
 
       html += `
         <div class="card">
-          <span class="tag">${category.toUpperCase()}</span>
-          <h3>${repo.name}</h3>
-          <p>${repo.description || "Project"}</p>
+          <img src="${getImage(category)}">
+          <div class="card-content">
+            <span class="tag">${category.toUpperCase()}</span>
+            <h3>${repo.name}</h3>
+            <p>${repo.description || "Project"}</p>
 
-          <a class="btn" href="${repo.html_url}" target="_blank">Code</a>
-          ${repo.homepage ? `<a class="btn" href="${repo.homepage}" target="_blank">Live Demo</a>` : ""}
+            <a class="btn" href="${repo.html_url}" target="_blank">Code</a>
+            ${repo.homepage ? `<a class="btn" href="${repo.homepage}" target="_blank">Live Demo</a>` : ""}
+          </div>
         </div>
       `;
     });
 
   document.getElementById("repos").innerHTML = html;
+  animateCards();
 }
 
-// FILTER BUTTON
+// ANIMATION
+function animateCards() {
+  const cards = document.querySelectorAll(".card");
+  cards.forEach((card, i) => {
+    setTimeout(() => card.classList.add("show"), i * 100);
+  });
+}
+
+// FILTER
 function filterRepos(type) {
   renderRepos(type);
 }
 
-// FETCH REPOS (IMPORTANT: replace username)
+// FETCH
 fetch("https://api.github.com/users/seneeraj/repos")
   .then(res => res.json())
   .then(data => {
@@ -201,7 +258,6 @@ fetch("https://api.github.com/users/seneeraj/repos")
   })
   .catch(err => {
     document.getElementById("repos").innerHTML = "<p>Error loading projects</p>";
-    console.error(err);
   });
 </script>
 
