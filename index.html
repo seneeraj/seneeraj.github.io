@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Neeraj's AI Portfolio</title>
+  <title>Neeraj Bhatia's AI Projects Portfolio</title>
   <style>
     body {
       font-family: Arial;
@@ -30,7 +30,7 @@
 </head>
 <body>
 
-<h1>🚀 My AI Projects Portfolio</h1>
+<h1>🚀 Neeraj Bhatia's Artificial Intellegence Projects Portfolio</h1>
 <div id="repos"></div>
 
 <script>
@@ -40,6 +40,7 @@ fetch("https://api.github.com/users/seneeraj/repos")
     let reposHTML = "";
     data
       .filter(repo => !repo.fork)
+      .filter(repo => repo.name.toLowerCase().includes("ai"))
       .forEach(repo => {
         reposHTML += `
           <div class="repo">
