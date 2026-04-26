@@ -15,6 +15,13 @@ body {
   color: white;
 }
 
+/* CONTAINER (FIXES SIDE SPACE) */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
 /* HERO */
 .hero {
   text-align: center;
@@ -25,28 +32,11 @@ body {
 
 /* SECTION */
 .section {
-  padding: 40px 20px;
+  padding: 40px 0;
   text-align: center;
 }
 
-  <div class="container">
-
-  <!-- HERO -->
-  <!-- FEATURED -->
-  <!-- FILTER -->
-  <!-- PROJECTS -->
-
-</div>
-
-  .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-  
-
-  /* GRID */
+/* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -128,6 +118,8 @@ body {
 
 <body>
 
+<div class="container">
+
 <!-- HERO -->
 
 <div class="hero">
@@ -135,7 +127,7 @@ body {
   <p>AI Systems | Trading Intelligence | Cybersecurity Tools</p>
 </div>
 
-<!-- FEATURED PROJECTS -->
+<!-- FEATURED -->
 
 <div class="section">
   <h2>🔥 Featured Products</h2>
@@ -186,7 +178,7 @@ body {
   <button class="btn" onclick="filterRepos('security')">Cybersecurity</button>
 </div>
 
-<!-- ALL PROJECTS -->
+<!-- PROJECTS -->
 
 <div class="grid" id="repos"></div>
 
@@ -196,26 +188,21 @@ body {
   © 2026 Neeraj Bhatia | AI Portfolio
 </div>
 
+</div>
+
 <script>
 let allRepos = [];
 
-// CATEGORY LOGIC
 function getCategory(name) {
   name = name.toLowerCase();
 
-  if (name.includes("trade") || name.includes("stock") || name.includes("nifty"))
-    return "trading";
-
-  if (name.includes("crime") || name.includes("secure") || name.includes("cyber"))
-    return "security";
-
-  if (name.includes("ai") || name.includes("ml") || name.includes("predict"))
-    return "ai";
+  if (name.includes("trade") || name.includes("stock") || name.includes("nifty")) return "trading";
+  if (name.includes("crime") || name.includes("secure") || name.includes("cyber")) return "security";
+  if (name.includes("ai") || name.includes("ml") || name.includes("predict")) return "ai";
 
   return "other";
 }
 
-// IMAGE MAPPING (STABLE)
 function getImage(category) {
   if (category === "trading") return "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800";
   if (category === "security") return "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800";
@@ -223,7 +210,6 @@ function getImage(category) {
   return "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800";
 }
 
-// RENDER PROJECTS
 function renderRepos(filter) {
   let html = "";
 
@@ -240,7 +226,6 @@ function renderRepos(filter) {
             <span class="tag">${category.toUpperCase()}</span>
             <h3>${repo.name}</h3>
             <p>${repo.description || "Project"}</p>
-
             <a class="btn" href="${repo.html_url}" target="_blank">Code</a>
             ${repo.homepage ? `<a class="btn" href="${repo.homepage}" target="_blank">Live Demo</a>` : ""}
           </div>
@@ -252,7 +237,6 @@ function renderRepos(filter) {
   animateCards();
 }
 
-// ANIMATION
 function animateCards() {
   const cards = document.querySelectorAll(".card");
   cards.forEach((card, i) => {
@@ -260,20 +244,15 @@ function animateCards() {
   });
 }
 
-// FILTER
 function filterRepos(type) {
   renderRepos(type);
 }
 
-// FETCH YOUR REPOS
 fetch("https://api.github.com/users/seneeraj/repos")
   .then(res => res.json())
   .then(data => {
     allRepos = data;
     renderRepos("all");
-  })
-  .catch(() => {
-    document.getElementById("repos").innerHTML = "<p>Error loading projects</p>";
   });
 </script>
 
