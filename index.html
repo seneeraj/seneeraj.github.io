@@ -61,7 +61,7 @@ body {
   font-size: 14px;
 }
 
-/* CATEGORY TAG */
+/* TAG */
 .tag {
   display: inline-block;
   padding: 4px 8px;
@@ -99,31 +99,31 @@ body {
 
 ```
 <div class="card">
-  <span class="tag">Mutual Fund Investment with AI Reasoning</span>
-  <h3>🛡️Mutual Fund Investment </h3>
-  <p>AI-powered Mutual Fund Investment Strategy with Monthly expenses Withdrawal Facility.</p>
-  <a class="btn" href="#" target="_blank">Live Demo</a>
+  <span class="tag">AI / Finance</span>
+  <h3>🛡️ Mutual Fund Investment</h3>
+  <p>AI-powered mutual fund strategy with monthly withdrawal planning.</p>
+  <a class="btn" href="https://your-streamlit-link-1" target="_blank">Live Demo</a>
 </div>
 
 <div class="card">
-  <span class="tag">Doctor's AI Medical Assistant</span>
-  <h3>🎙️ Doctor's AI Medical Assistant in Health Diagnosis</h3>
-  <p>An AI Assistant to a Doctor to capture the symptoms and Diagnosis.</p>
-  <a class="btn" href="#" target="_blank">Live Demo</a>
+  <span class="tag">AI / Healthcare</span>
+  <h3>🎙️ Doctor's AI Assistant</h3>
+  <p>AI assistant for capturing symptoms and aiding diagnosis.</p>
+  <a class="btn" href="https://your-streamlit-link-2" target="_blank">Live Demo</a>
 </div>
 
 <div class="card">
-  <span class="tag">Cyber Crime Scam Detection System</span>
-  <h3>📈 Cyber Crime Scam Detection System</h3>
-  <p>AI-powered scam detection system with reasoning for *Text *Image * Barcode *UPI * Audio * WhatsApp and *LIVE.</p>
-  <a class="btn" href="#" target="_blank">Live Demo</a>
+  <span class="tag">Cybersecurity AI</span>
+  <h3>📈 Cyber Crime Detection</h3>
+  <p>AI system for detecting scams across text, image, UPI, and more.</p>
+  <a class="btn" href="https://your-streamlit-link-3" target="_blank">Live Demo</a>
 </div>
 ```
 
   </div>
 </div>
 
-<!-- FILTER BUTTONS -->
+<!-- FILTER -->
 
 <div class="section">
   <h2>📂 Explore Projects</h2>
@@ -146,19 +146,23 @@ body {
 <script>
 let allRepos = [];
 
+// CATEGORY LOGIC
 function getCategory(name) {
   name = name.toLowerCase();
 
-  if (name.includes("trade") || name.includes("stock"))
+  if (name.includes("trade") || name.includes("stock") || name.includes("nifty"))
     return "trading";
-  if (name.includes("crime") || name.includes("secure"))
+
+  if (name.includes("crime") || name.includes("secure") || name.includes("cyber"))
     return "security";
-  if (name.includes("ai") || name.includes("ml"))
+
+  if (name.includes("ai") || name.includes("ml") || name.includes("predict"))
     return "ai";
 
   return "other";
 }
 
+// RENDER PROJECTS
 function renderRepos(filter) {
   let html = "";
 
@@ -183,15 +187,21 @@ function renderRepos(filter) {
   document.getElementById("repos").innerHTML = html;
 }
 
+// FILTER BUTTON
 function filterRepos(type) {
   renderRepos(type);
 }
 
-fetch("https://api.github.com/users/YOUR_USERNAME/repos")
+// FETCH REPOS (IMPORTANT: replace username)
+fetch("https://api.github.com/users/neerajbhatia/repos")
   .then(res => res.json())
   .then(data => {
     allRepos = data;
     renderRepos("all");
+  })
+  .catch(err => {
+    document.getElementById("repos").innerHTML = "<p>Error loading projects</p>";
+    console.error(err);
   });
 </script>
 
