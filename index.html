@@ -130,7 +130,7 @@ body {
 <script>
 let allRepos = [];
 
-/* SMART CATEGORY */
+/* CATEGORY */
 function getCategory(repo) {
   const text = (repo.name + " " + (repo.description || "")).toLowerCase();
 
@@ -159,11 +159,10 @@ function renderRepos(filter) {
   let html = "";
 
   const filtered = allRepos
-    .filter(repo => !repo.fork) // remove this line if needed
     .filter(repo => filter === "all" || getCategory(repo) === filter);
 
   if (filtered.length === 0) {
-    html = "<p style='text-align:center;color:#94a3b8;'>No projects found in this category.</p>";
+    html = "<p style='text-align:center;color:#94a3b8;'>No projects found.</p>";
   }
 
   filtered.forEach(repo => {
@@ -191,20 +190,39 @@ function filterRepos(type) {
   renderRepos(type);
 }
 
-/* FETCH ALL REPOS */
-fetch("https://api.github.com/users/seneeraj/repos?per_page=100&sort=updated")
-  .then(res => res.json())
+/* 🔥 FETCH MULTIPLE PAGES */
+async function fetchAllRepos() {
+  let page = 1;
+  let repos = [];
+  let keepFetching = true;
+
+  while (keepFetching && page <= 5) { // up to 500 repos
+    const res = await fetch(`https://api.github.com/users/seneeraj/repos?per_page=100&page=${page}`);
+    const data = await res.json();
+
+    if (data.length === 0) {
+      keepFetching = false;
+    } else {
+      repos = repos.concat(data);
+      page++;
+    }
+  }
+
+  return repos;
+}
+
+/* INIT */
+fetchAllRepos()
   .then(data => {
     allRepos = data;
-    console.log("Loaded repos:", allRepos.length);
+    console.log("TOTAL REPOS LOADED:", allRepos.length);
     renderRepos("all");
   })
   .catch(err => {
-    console.error("GitHub fetch error:", err);
+    console.error(err);
     document.getElementById("repos").innerHTML =
       "<p style='text-align:center;color:red;'>Failed to load projects.</p>";
   });
 </script>
-
 </body>
 </html>
