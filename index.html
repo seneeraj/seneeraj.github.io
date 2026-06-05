@@ -146,17 +146,58 @@ body {
 let allRepos = [];
 
 /* CATEGORY */
+/* CATEGORY */
 function getCategory(repo) {
+
+  const repoName = repo.name.toLowerCase();
   const text = (repo.name + " " + (repo.description || "")).toLowerCase();
 
-  if (["trade","stock","nifty","nse","market","option","intraday"]
-      .some(k => text.includes(k))) return "trading";
+  /* MANUAL CATEGORY MAPPING */
+  const customCategories = {
 
-  if (["cyber","secure","crime","security","fraud"]
-      .some(k => text.includes(k))) return "security";
+    /* AI PROJECTS */
+    "sales-marketing-ai-automation-system": "ai",
+    "ai-stenographer": "ai",
+    "camera-shield-ai": "ai",
+    "safecity-ai": "ai",
 
-  if (["ai","ml","predict","model","neural"]
-      .some(k => text.includes(k))) return "ai";
+    /* TRADING PROJECTS */
+    "nifty-option-predictor": "trading",
+    "stock-market-prediction": "trading",
+
+    /* CYBERSECURITY PROJECTS */
+    "cyber-guardian": "security",
+    "crime-probability-heatmap-dashboard": "security"
+
+  };
+
+  /* USE MANUAL CATEGORY IF DEFINED */
+  if (customCategories[repoName]) {
+    return customCategories[repoName];
+  }
+
+  /* AUTO-DETECT CATEGORY */
+
+  if (
+    ["ai","ml","predict","model","neural","llm","agent","chatbot"]
+      .some(k => text.includes(k))
+  ) {
+    return "ai";
+  }
+
+  if (
+    ["trade","stock","nifty","nse","option","intraday","forex","trading"]
+      .some(k => text.includes(k))
+  ) {
+    return "trading";
+  }
+
+  if (
+    ["cyber","secure","security","fraud","crime","phishing","malware"]
+      .some(k => text.includes(k))
+  ) {
+    return "security";
+  }
 
   return "other";
 }
